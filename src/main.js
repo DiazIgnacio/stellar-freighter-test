@@ -62,6 +62,7 @@ const connectServer = async () => {
             const balance = document.createElement('h3')
             balance.innerText = `Total Balance: ${getBalance(account, 'XLM')} XLM`
             document.body.appendChild(balance)
+            console.log(account)
         })
         .catch((err) => {
             console.log(err);
@@ -71,7 +72,11 @@ connectServer()
 
 const displayAsset = (asset) => {
     const li = document.createElement('li')
-    li.innerText = asset.balance
+    let assetCode = 'XLM'
+    if (asset.asset_type !== 'native') {
+        assetCode = asset.asset_code
+    }
+    li.innerText = `${asset.balance} ${assetCode}`
     balances.appendChild(li)
 }
 
@@ -95,15 +100,15 @@ const trustAsset = async () => {
             const builder = new StellarSDK.TransactionBuilder(account, { fee, networkPassphrase: StellarSDK.Networks.PUBLIC });
 
             //Change Trustline to trust the asset to be used on the platform.
-        //     builder.addOperation(StellarSDK.Operation.createAccount({
-        //         destination: assetIssuerAddress.publicKey(),
-        //         startingBalance: '1.6'
-        //    }))
-        //     builder.addOperation(
-        //         StellarSDK.Operation.changeTrust({
-        //             asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
-        //         })
-        //     )
+            //     builder.addOperation(StellarSDK.Operation.createAccount({
+            //         destination: assetIssuerAddress.publicKey(),
+            //         startingBalance: '1.6'
+            //    }))
+            //     builder.addOperation(
+            //         StellarSDK.Operation.changeTrust({
+            //             asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
+            //         })
+            //     )
             builder.addOperation(StellarSDK.Operation.createPassiveSellOffer({
                 selling: StellarSDK.Asset.native(),
                 buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
@@ -122,4 +127,3 @@ const trustAsset = async () => {
             const response = await server.submitTransaction(transactionToSubmit);
         })
 }
-trustAsset()

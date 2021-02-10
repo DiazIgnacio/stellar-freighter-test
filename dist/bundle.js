@@ -60156,6 +60156,7 @@ var connectServer = /*#__PURE__*/function () {
               var balance = document.createElement('h3');
               balance.innerText = "Total Balance: ".concat(getBalance(account, 'XLM'), " XLM");
               document.body.appendChild(balance);
+              console.log(account);
             })["catch"](function (err) {
               console.log(err);
             });
@@ -60177,7 +60178,13 @@ connectServer();
 
 var displayAsset = function displayAsset(asset) {
   var li = document.createElement('li');
-  li.innerText = asset.balance;
+  var assetCode = 'XLM';
+
+  if (asset.asset_type !== 'native') {
+    assetCode = asset.asset_code;
+  }
+
+  li.innerText = "".concat(asset.balance, " ").concat(assetCode);
   balances.appendChild(li);
 };
 
@@ -60282,7 +60289,5 @@ var trustAsset = /*#__PURE__*/function () {
     return _ref5.apply(this, arguments);
   };
 }();
-
-trustAsset();
 
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);
