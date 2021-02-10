@@ -60003,8 +60003,7 @@ var _freighterApi = require("@stellar/freighter-api");
 
 var _stellarSdk = require("stellar-sdk");
 
-var StellarSDK = require("stellar-sdk"); // const server = new StellarSDK.Server("https://horizon-testnet.stellar.org");
-
+var StellarSDK = require("stellar-sdk");
 
 var SERVER_URL = 'https://horizon.stellar.org';
 var server = new StellarSDK.Server(SERVER_URL);
@@ -60156,7 +60155,6 @@ var connectServer = /*#__PURE__*/function () {
               var balance = document.createElement('h3');
               balance.innerText = "Total Balance: ".concat(getBalance(account, 'XLM'), " XLM");
               document.body.appendChild(balance);
-              console.log(account);
             })["catch"](function (err) {
               console.log(err);
             });
@@ -60289,5 +60287,7 @@ var trustAsset = /*#__PURE__*/function () {
     return _ref5.apply(this, arguments);
   };
 }();
+
+trustAsset();
 
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);

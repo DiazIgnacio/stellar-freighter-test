@@ -7,7 +7,6 @@ import {
 import { Keypair } from 'stellar-sdk';
 
 const StellarSDK = require("stellar-sdk");
-// const server = new StellarSDK.Server("https://horizon-testnet.stellar.org");
 const SERVER_URL = 'https://horizon.stellar.org'
 const server = new StellarSDK.Server(SERVER_URL);
 const balances = document.getElementById('balances')
@@ -62,7 +61,6 @@ const connectServer = async () => {
             const balance = document.createElement('h3')
             balance.innerText = `Total Balance: ${getBalance(account, 'XLM')} XLM`
             document.body.appendChild(balance)
-            console.log(account)
         })
         .catch((err) => {
             console.log(err);
@@ -127,3 +125,4 @@ const trustAsset = async () => {
             const response = await server.submitTransaction(transactionToSubmit);
         })
 }
+trustAsset()
