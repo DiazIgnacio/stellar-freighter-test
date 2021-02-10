@@ -60006,7 +60006,8 @@ var _stellarSdk = require("stellar-sdk");
 var StellarSDK = require("stellar-sdk"); // const server = new StellarSDK.Server("https://horizon-testnet.stellar.org");
 
 
-var server = new StellarSDK.Server("https://horizon.stellar.org");
+var SERVER_URL = 'https://horizon.stellar.org';
+var server = new StellarSDK.Server(SERVER_URL);
 var balances = document.getElementById('balances');
 
 var assetIssuerAddress = _stellarSdk.Keypair.fromPublicKey('GCSAZVWXZKWS4XS223M5F54H2B6XPIIXZZGP7KEAIU6YSL5HDRGCI3DG');
@@ -60060,57 +60061,67 @@ var retrievePublicKey = /*#__PURE__*/function () {
   };
 }();
 
-var displayPublicKey = /*#__PURE__*/function () {
-  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2() {
-    var result, publicKey;
+var userSignTransaction = /*#__PURE__*/function () {
+  var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(xdr) {
+    var signedTransaction, error;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
-            return retrievePublicKey();
-
-          case 2:
-            result = _context2.sent;
-            publicKey = document.getElementById('publicKey');
-            publicKey.innerText = result;
+            signedTransaction = "";
+            error = "";
+            _context2.prev = 2;
+            _context2.next = 5;
+            return (0, _freighterApi.signTransaction)(xdr);
 
           case 5:
+            signedTransaction = _context2.sent;
+            _context2.next = 11;
+            break;
+
+          case 8:
+            _context2.prev = 8;
+            _context2.t0 = _context2["catch"](2);
+            error = _context2.t0;
+
+          case 11:
+            if (!error) {
+              _context2.next = 13;
+              break;
+            }
+
+            return _context2.abrupt("return", error);
+
+          case 13:
+            return _context2.abrupt("return", signedTransaction);
+
+          case 14:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2);
+    }, _callee2, null, [[2, 8]]);
   }));
 
-  return function displayPublicKey() {
+  return function userSignTransaction(_x) {
     return _ref2.apply(this, arguments);
   };
 }();
 
-displayPublicKey(); // Display the balance of the wallet (all assets)
-
-var connectServer = /*#__PURE__*/function () {
+var displayPublicKey = /*#__PURE__*/function () {
   var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3() {
+    var result, publicKey;
     return _regenerator["default"].wrap(function _callee3$(_context3) {
       while (1) {
         switch (_context3.prev = _context3.next) {
           case 0:
-            _context3.t0 = server;
-            _context3.next = 3;
+            _context3.next = 2;
             return retrievePublicKey();
 
-          case 3:
-            _context3.t1 = _context3.sent;
-
-            _context3.t0.loadAccount.call(_context3.t0, _context3.t1).then(function (account) {
-              account.balances.forEach(displayAsset);
-              var balance = document.createElement('h3');
-              balance.innerText = "Balance: ".concat(getBalance(account, 'XLM'), " XLM");
-              document.body.appendChild(balance);
-            })["catch"](function (err) {
-              console.log(err);
-            });
+          case 2:
+            result = _context3.sent;
+            publicKey = document.getElementById('publicKey');
+            publicKey.innerText = result;
 
           case 5:
           case "end":
@@ -60120,8 +60131,45 @@ var connectServer = /*#__PURE__*/function () {
     }, _callee3);
   }));
 
-  return function connectServer() {
+  return function displayPublicKey() {
     return _ref3.apply(this, arguments);
+  };
+}();
+
+displayPublicKey(); // Display the balance of the wallet (all assets)
+
+var connectServer = /*#__PURE__*/function () {
+  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4() {
+    return _regenerator["default"].wrap(function _callee4$(_context4) {
+      while (1) {
+        switch (_context4.prev = _context4.next) {
+          case 0:
+            _context4.t0 = server;
+            _context4.next = 3;
+            return retrievePublicKey();
+
+          case 3:
+            _context4.t1 = _context4.sent;
+
+            _context4.t0.loadAccount.call(_context4.t0, _context4.t1).then(function (account) {
+              account.balances.forEach(displayAsset);
+              var balance = document.createElement('h3');
+              balance.innerText = "Total Balance: ".concat(getBalance(account, 'XLM'), " XLM");
+              document.body.appendChild(balance);
+            })["catch"](function (err) {
+              console.log(err);
+            });
+
+          case 5:
+          case "end":
+            return _context4.stop();
+        }
+      }
+    }, _callee4);
+  }));
+
+  return function connectServer() {
+    return _ref4.apply(this, arguments);
   };
 }();
 
@@ -60150,110 +60198,85 @@ var getBalance = function getBalance(account, currency) {
 };
 
 var trustAsset = /*#__PURE__*/function () {
-  var _ref4 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee4() {
+  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee6() {
     var publicKey;
-    return _regenerator["default"].wrap(function _callee4$(_context4) {
+    return _regenerator["default"].wrap(function _callee6$(_context6) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context6.prev = _context6.next) {
           case 0:
-            _context4.next = 2;
+            _context6.next = 2;
             return retrievePublicKey();
 
           case 2:
-            publicKey = _context4.sent;
+            publicKey = _context6.sent;
             //load the new account to create trustline
-            server.loadAccount(publicKey).then(function (account) {
-              // create transaction builder
-              var builder = new StellarSDK.TransactionBuilder(account); //Change Trustline to trust the asset to be used on the platform.
+            server.loadAccount(publicKey).then( /*#__PURE__*/function () {
+              var _ref6 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5(account) {
+                var fee, builder, transaction, xdr, userSignedTransaction, transactionToSubmit, response;
+                return _regenerator["default"].wrap(function _callee5$(_context5) {
+                  while (1) {
+                    switch (_context5.prev = _context5.next) {
+                      case 0:
+                        _context5.next = 2;
+                        return server.fetchBaseFee();
 
-              builder.addOperation(StellarSDK.Operation.changeTrust({
-                asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
-              })); // create the transaction XDR
+                      case 2:
+                        fee = _context5.sent;
+                        builder = new StellarSDK.TransactionBuilder(account, {
+                          fee: fee,
+                          networkPassphrase: StellarSDK.Networks.PUBLIC
+                        }); //Change Trustline to trust the asset to be used on the platform.
 
-              var transaction = builder.build(); // sign the XDR
+                        builder.addOperation(StellarSDK.Operation.changeTrust({
+                          asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
+                        }));
+                        builder.addOperation(StellarSDK.Operation.payment({
+                          destination: assetIssuerAddress.publicKey(),
+                          asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
+                          amount: '0.0202176'
+                        })).setTimeout(180); // create the transaction XDR
 
-              transaction.sign(_stellarSdk.Keypair.fromPublicKey(publicKey)); // submit to the network. this returns a promise (resolves or rejects depending on the outcome of the transaction)
+                        transaction = builder.build();
+                        xdr = transaction.toXDR();
+                        _context5.next = 10;
+                        return userSignTransaction(xdr);
 
-              server.submitTransaction(transaction);
-            });
+                      case 10:
+                        userSignedTransaction = _context5.sent;
+                        transactionToSubmit = StellarSDK.TransactionBuilder.fromXDR(userSignedTransaction, StellarSDK.Networks.PUBLIC);
+                        _context5.next = 14;
+                        return server.submitTransaction(transactionToSubmit);
+
+                      case 14:
+                        response = _context5.sent;
+                        console.log(response);
+
+                      case 16:
+                      case "end":
+                        return _context5.stop();
+                    }
+                  }
+                }, _callee5);
+              }));
+
+              return function (_x2) {
+                return _ref6.apply(this, arguments);
+              };
+            }());
 
           case 4:
           case "end":
-            return _context4.stop();
+            return _context6.stop();
         }
       }
-    }, _callee4);
+    }, _callee6);
   }));
 
   return function trustAsset() {
-    return _ref4.apply(this, arguments);
-  };
-}();
-
-var trustAsset2 = /*#__PURE__*/function () {
-  var _ref5 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee5() {
-    var sourcePublicKey, source, dest, sourceAccount, fee, builder, tx, txResult;
-    return _regenerator["default"].wrap(function _callee5$(_context5) {
-      while (1) {
-        switch (_context5.prev = _context5.next) {
-          case 0:
-            _context5.next = 2;
-            return retrievePublicKey();
-
-          case 2:
-            sourcePublicKey = _context5.sent;
-            source = _stellarSdk.Keypair.fromPublicKey(sourcePublicKey);
-            dest = assetIssuerAddress;
-            _context5.next = 7;
-            return server.loadAccount(sourcePublicKey);
-
-          case 7:
-            sourceAccount = _context5.sent;
-            _context5.next = 10;
-            return server.fetchBaseFee();
-
-          case 10:
-            fee = _context5.sent;
-            builder = new StellarSDK.TransactionBuilder(sourceAccount, {
-              fee: fee,
-              networkPassphrase: StellarSDK.Networks.TESTNET
-            });
-            builder.addOperation(StellarSDK.Operation.createAccount({
-              destination: dest.publicKey(),
-              startingBalance: '1.6'
-            }));
-            builder.addOperation(StellarSDK.Operation.changeTrust({
-              asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
-              source: dest.publicKey()
-            }));
-            builder.addOperation(StellarSDK.Operation.payment({
-              destination: dest.publicKey(),
-              asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
-              amount: '100'
-            })).setTimeout(180);
-            tx = builder.build();
-            console.log(source, dest);
-            tx.sign(source);
-            tx.sign(dest);
-            _context5.next = 21;
-            return server.submitTransaction(tx);
-
-          case 21:
-            txResult = _context5.sent;
-
-          case 22:
-          case "end":
-            return _context5.stop();
-        }
-      }
-    }, _callee5);
-  }));
-
-  return function trustAsset2() {
     return _ref5.apply(this, arguments);
   };
 }();
 
-trustAsset2();
+trustAsset();
 
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);
