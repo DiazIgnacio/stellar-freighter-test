@@ -95,16 +95,20 @@ const trustAsset = async () => {
             const builder = new StellarSDK.TransactionBuilder(account, { fee, networkPassphrase: StellarSDK.Networks.PUBLIC });
 
             //Change Trustline to trust the asset to be used on the platform.
-            builder.addOperation(
-                StellarSDK.Operation.changeTrust({
-                    asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
-                })
-            )
-
-            builder.addOperation(StellarSDK.Operation.payment({
-                destination: assetIssuerAddress.publicKey(),
-                asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
-                amount: '0.0202176'
+        //     builder.addOperation(StellarSDK.Operation.createAccount({
+        //         destination: assetIssuerAddress.publicKey(),
+        //         startingBalance: '1.6'
+        //    }))
+        //     builder.addOperation(
+        //         StellarSDK.Operation.changeTrust({
+        //             asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
+        //         })
+        //     )
+            builder.addOperation(StellarSDK.Operation.createPassiveSellOffer({
+                selling: StellarSDK.Asset.native(),
+                buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
+                amount: '1',
+                price: '0.0202176'
             })).setTimeout(180)
 
             // create the transaction XDR
@@ -116,7 +120,6 @@ const trustAsset = async () => {
                 StellarSDK.Networks.PUBLIC
             );
             const response = await server.submitTransaction(transactionToSubmit);
-            console.log(response)
         })
 }
 trustAsset()

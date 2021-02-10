@@ -60226,32 +60226,38 @@ var trustAsset = /*#__PURE__*/function () {
                           fee: fee,
                           networkPassphrase: StellarSDK.Networks.PUBLIC
                         }); //Change Trustline to trust the asset to be used on the platform.
+                        //     builder.addOperation(StellarSDK.Operation.createAccount({
+                        //         destination: assetIssuerAddress.publicKey(),
+                        //         startingBalance: '1.6'
+                        //    }))
+                        //     builder.addOperation(
+                        //         StellarSDK.Operation.changeTrust({
+                        //             asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
+                        //         })
+                        //     )
 
-                        builder.addOperation(StellarSDK.Operation.changeTrust({
-                          asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
-                        }));
-                        builder.addOperation(StellarSDK.Operation.payment({
-                          destination: assetIssuerAddress.publicKey(),
-                          asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
-                          amount: '0.0202176'
+                        builder.addOperation(StellarSDK.Operation.createPassiveSellOffer({
+                          selling: StellarSDK.Asset["native"](),
+                          buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
+                          amount: '1',
+                          price: '0.0202176'
                         })).setTimeout(180); // create the transaction XDR
 
                         transaction = builder.build();
                         xdr = transaction.toXDR();
-                        _context5.next = 10;
+                        _context5.next = 9;
                         return userSignTransaction(xdr);
 
-                      case 10:
+                      case 9:
                         userSignedTransaction = _context5.sent;
                         transactionToSubmit = StellarSDK.TransactionBuilder.fromXDR(userSignedTransaction, StellarSDK.Networks.PUBLIC);
-                        _context5.next = 14;
+                        _context5.next = 13;
                         return server.submitTransaction(transactionToSubmit);
 
-                      case 14:
+                      case 13:
                         response = _context5.sent;
-                        console.log(response);
 
-                      case 16:
+                      case 14:
                       case "end":
                         return _context5.stop();
                     }
