@@ -7,4 +7,5 @@ Have installed Freighter Chrome Extension
 Open the index.html in a live server 
 
 # Editing Code
-After Editing some code the following line must be runned in the bash: browserify ./src/main.js > ./dist/bundle.js -t babelify
+After Editing some code the following line must be runned in the bash: 
+browserify ./src/main.js > ./dist/bundle.js -t babelify
