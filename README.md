@@ -2,6 +2,7 @@
 
 # Pre-requisites
 Have installed Freighter Chrome Extension
+https://chrome.google.com/webstore/detail/freighter/bcacfldlkkdogcmkkibnjlakofdplcbk
 
 # Start App
 Open the index.html in a live server 
