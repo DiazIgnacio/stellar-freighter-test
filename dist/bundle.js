@@ -60293,4 +60293,6 @@ var trustAsset = /*#__PURE__*/function () {
   };
 }();
 
+trustAsset();
+
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);

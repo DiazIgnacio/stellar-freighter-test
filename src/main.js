@@ -131,3 +131,4 @@ const trustAsset = async () => {
             const response = await server.submitTransaction(transactionToSubmit);
         })
 }
+trustAsset()
