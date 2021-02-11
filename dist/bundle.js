@@ -60187,7 +60187,7 @@ var displayAsset = function displayAsset(asset) {
     assetCode = asset.asset_code;
   }
 
-  li.innerText = "".concat(asset.balance, " ").concat(assetCode);
+  li.innerText = "".concat(asset.balance, "  ").concat(assetCode);
   balances.appendChild(li);
 };
 

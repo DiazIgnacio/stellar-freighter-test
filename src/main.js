@@ -80,7 +80,7 @@ const displayAsset = (asset) => {
     if (asset.asset_type !== 'native') {
         assetCode = asset.asset_code
     }
-    li.innerText = `${asset.balance} ${assetCode}`
+    li.innerText = `${asset.balance}  ${assetCode}`
     balances.appendChild(li)
 }
 
