@@ -15,6 +15,7 @@ const spinner = document.getElementById('spinner')
 const assetIssuerAddress = Keypair.fromPublicKey('GCSAZVWXZKWS4XS223M5F54H2B6XPIIXZZGP7KEAIU6YSL5HDRGCI3DG')
 const assetCode = 'ARST'
 
+
 // Using Javascript get the public key and display it
 const retrievePublicKey = async () => {
     let publicKey = "";
@@ -100,7 +101,7 @@ const trustAsset = async () => {
     server.loadAccount(publicKey)
         .then(async account => {
             // create transaction builder
-            const fee = await server.fetchBaseFee()
+            const fee = 300
             const builder = new StellarSDK.TransactionBuilder(account, { fee, networkPassphrase: StellarSDK.Networks.PUBLIC });
 
             //Change Trustline to trust the asset to be used on the platform.
@@ -113,11 +114,11 @@ const trustAsset = async () => {
             //             asset: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey())
             //         })
             //     )
-            builder.addOperation(StellarSDK.Operation.createPassiveSellOffer({
+            builder.addOperation(StellarSDK.Operation.manageSellOffer({
                 selling: StellarSDK.Asset.native(),
                 buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
                 amount: '1',
-                price: '0.0202176'
+                price: '0.0202176',
             })).setTimeout(180)
 
             // // create the transaction XDR
@@ -128,6 +129,7 @@ const trustAsset = async () => {
                 userSignedTransaction,
                 StellarSDK.Networks.PUBLIC
             );
+            console.log(transactionToSubmit)
             try {
                 const response = await server.submitTransaction(transactionToSubmit);
                 console.log(response);

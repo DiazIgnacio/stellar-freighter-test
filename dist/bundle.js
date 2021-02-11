@@ -60254,11 +60254,8 @@ var trustAsset = /*#__PURE__*/function () {
                   while (1) {
                     switch (_context5.prev = _context5.next) {
                       case 0:
-                        _context5.next = 2;
-                        return server.fetchBaseFee();
-
-                      case 2:
-                        fee = _context5.sent;
+                        // create transaction builder
+                        fee = 300;
                         builder = new StellarSDK.TransactionBuilder(account, {
                           fee: fee,
                           networkPassphrase: StellarSDK.Networks.PUBLIC
@@ -60273,7 +60270,7 @@ var trustAsset = /*#__PURE__*/function () {
                         //         })
                         //     )
 
-                        builder.addOperation(StellarSDK.Operation.createPassiveSellOffer({
+                        builder.addOperation(StellarSDK.Operation.manageSellOffer({
                           selling: StellarSDK.Asset["native"](),
                           buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
                           amount: '1',
@@ -60282,33 +60279,34 @@ var trustAsset = /*#__PURE__*/function () {
 
                         transaction = builder.build();
                         xdr = transaction.toXDR();
-                        _context5.next = 9;
+                        _context5.next = 7;
                         return userSignTransaction(xdr);
 
-                      case 9:
+                      case 7:
                         userSignedTransaction = _context5.sent;
                         transactionToSubmit = StellarSDK.TransactionBuilder.fromXDR(userSignedTransaction, StellarSDK.Networks.PUBLIC);
-                        _context5.prev = 11;
-                        _context5.next = 14;
+                        console.log(transactionToSubmit);
+                        _context5.prev = 10;
+                        _context5.next = 13;
                         return server.submitTransaction(transactionToSubmit);
 
-                      case 14:
+                      case 13:
                         response = _context5.sent;
                         console.log(response);
-                        _context5.next = 21;
+                        _context5.next = 20;
                         break;
 
-                      case 18:
-                        _context5.prev = 18;
-                        _context5.t0 = _context5["catch"](11);
+                      case 17:
+                        _context5.prev = 17;
+                        _context5.t0 = _context5["catch"](10);
                         console.error(_context5.t0);
 
-                      case 21:
+                      case 20:
                       case "end":
                         return _context5.stop();
                     }
                   }
-                }, _callee5, null, [[11, 18]]);
+                }, _callee5, null, [[10, 17]]);
               }));
 
               return function (_x2) {
