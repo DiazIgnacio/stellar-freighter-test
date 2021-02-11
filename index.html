@@ -5,15 +5,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Stellar Freighter Test</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <script src="./node_modules/@stellar/freighter-api/build/index.min.js"></script>
 </head>
 
 <body>
-    <h1>The Public Key is:</h1>
-    <div id="publicKey"></div>
-    <h2>Balances:</h2>
-    <ul id="balances"></ul>
+    <div id="spinner" class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div class="container mt-5 mx-auto d-none" id="container">
+        <h1 class="pb-2">The Public Key is:</h1>
+        <div id="publicKey"></div>
+        <div class="py-4">
+            <h2 clas>Balances:</h2>
+            <ul id="balances" class="list-group"></ul>
+        </div>
+    </div>
 
     <script src="./dist/bundle.js"></script>
 </body>

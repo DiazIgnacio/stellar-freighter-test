@@ -10,6 +10,8 @@ const StellarSDK = require("stellar-sdk");
 const SERVER_URL = 'https://horizon.stellar.org'
 const server = new StellarSDK.Server(SERVER_URL);
 const balances = document.getElementById('balances')
+const container = document.getElementById('container')
+const spinner = document.getElementById('spinner')
 const assetIssuerAddress = Keypair.fromPublicKey('GCSAZVWXZKWS4XS223M5F54H2B6XPIIXZZGP7KEAIU6YSL5HDRGCI3DG')
 const assetCode = 'ARST'
 
@@ -60,7 +62,10 @@ const connectServer = async () => {
             account.balances.forEach(displayAsset);
             const balance = document.createElement('h3')
             balance.innerText = `Total Balance: ${getBalance(account, 'XLM')} XLM`
-            document.body.appendChild(balance)
+            container.appendChild(balance)
+            spinner.classList.add('d-none')
+            container.classList.remove('d-none')
+
         })
         .catch((err) => {
             console.log(err);
@@ -70,6 +75,7 @@ connectServer()
 
 const displayAsset = (asset) => {
     const li = document.createElement('li')
+    li.classList.add('list-group-item')
     let assetCode = 'XLM'
     if (asset.asset_type !== 'native') {
         assetCode = asset.asset_code
@@ -125,4 +131,3 @@ const trustAsset = async () => {
             const response = await server.submitTransaction(transactionToSubmit);
         })
 }
-trustAsset()

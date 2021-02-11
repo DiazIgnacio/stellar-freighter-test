@@ -60008,6 +60008,8 @@ var StellarSDK = require("stellar-sdk");
 var SERVER_URL = 'https://horizon.stellar.org';
 var server = new StellarSDK.Server(SERVER_URL);
 var balances = document.getElementById('balances');
+var container = document.getElementById('container');
+var spinner = document.getElementById('spinner');
 
 var assetIssuerAddress = _stellarSdk.Keypair.fromPublicKey('GCSAZVWXZKWS4XS223M5F54H2B6XPIIXZZGP7KEAIU6YSL5HDRGCI3DG');
 
@@ -60154,7 +60156,9 @@ var connectServer = /*#__PURE__*/function () {
               account.balances.forEach(displayAsset);
               var balance = document.createElement('h3');
               balance.innerText = "Total Balance: ".concat(getBalance(account, 'XLM'), " XLM");
-              document.body.appendChild(balance);
+              container.appendChild(balance);
+              spinner.classList.add('d-none');
+              container.classList.remove('d-none');
             })["catch"](function (err) {
               console.log(err);
             });
@@ -60176,6 +60180,7 @@ connectServer();
 
 var displayAsset = function displayAsset(asset) {
   var li = document.createElement('li');
+  li.classList.add('list-group-item');
   var assetCode = 'XLM';
 
   if (asset.asset_type !== 'native') {
@@ -60287,7 +60292,5 @@ var trustAsset = /*#__PURE__*/function () {
     return _ref5.apply(this, arguments);
   };
 }();
-
-trustAsset();
 
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);
