@@ -120,7 +120,7 @@ const trustAsset = async () => {
                 price: '0.0202176'
             })).setTimeout(180)
 
-            // create the transaction XDR
+            // // create the transaction XDR
             let transaction = builder.build();
             let xdr = transaction.toXDR()
             const userSignedTransaction = await userSignTransaction(xdr);
@@ -128,7 +128,12 @@ const trustAsset = async () => {
                 userSignedTransaction,
                 StellarSDK.Networks.PUBLIC
             );
-            const response = await server.submitTransaction(transactionToSubmit);
+            try {
+                const response = await server.submitTransaction(transactionToSubmit);
+                console.log(response);
+            } catch (err) {
+                console.error(err);
+            }
         })
 }
 trustAsset()

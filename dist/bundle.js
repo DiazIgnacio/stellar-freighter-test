@@ -23922,8 +23922,35 @@ function MessageEvent (type, eventInitDict) {
 
 }).call(this)}).call(this,require('_process'),require("buffer").Buffer)
 },{"_process":25,"buffer":5,"events":10,"http":31,"https":18,"original":663,"url":51,"util":56}],425:[function(require,module,exports){
-arguments[4][20][0].apply(exports,arguments)
-},{"dup":20}],426:[function(require,module,exports){
+if (typeof Object.create === 'function') {
+  // implementation from standard node.js 'util' module
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      ctor.prototype = Object.create(superCtor.prototype, {
+        constructor: {
+          value: ctor,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
+      })
+    }
+  };
+} else {
+  // old school shim for old browsers
+  module.exports = function inherits(ctor, superCtor) {
+    if (superCtor) {
+      ctor.super_ = superCtor
+      var TempCtor = function () {}
+      TempCtor.prototype = superCtor.prototype
+      ctor.prototype = new TempCtor()
+      ctor.prototype.constructor = ctor
+    }
+  }
+}
+
+},{}],426:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -24988,8 +25015,8 @@ var Opaque = exports.Opaque = function () {
 }();
 
 (0, _ioMixin2.default)(Opaque.prototype);
-}).call(this)}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":22,"./io-mixin":436,"./util":447}],438:[function(require,module,exports){
+}).call(this)}).call(this,{"isBuffer":require("../../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":22,"./io-mixin":436,"./util":447}],438:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -26153,8 +26180,8 @@ var VarOpaque = exports.VarOpaque = function () {
 }();
 
 (0, _ioMixin2.default)(VarOpaque.prototype);
-}).call(this)}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":22,"./int":435,"./io-mixin":436,"./unsigned-int":446,"./util":447}],450:[function(require,module,exports){
+}).call(this)}).call(this,{"isBuffer":require("../../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":22,"./int":435,"./io-mixin":436,"./unsigned-int":446,"./util":447}],450:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -60251,7 +60278,7 @@ var trustAsset = /*#__PURE__*/function () {
                           buying: new StellarSDK.Asset(assetCode, assetIssuerAddress.publicKey()),
                           amount: '1',
                           price: '0.0202176'
-                        })).setTimeout(180); // create the transaction XDR
+                        })).setTimeout(180); // // create the transaction XDR
 
                         transaction = builder.build();
                         xdr = transaction.toXDR();
@@ -60261,18 +60288,27 @@ var trustAsset = /*#__PURE__*/function () {
                       case 9:
                         userSignedTransaction = _context5.sent;
                         transactionToSubmit = StellarSDK.TransactionBuilder.fromXDR(userSignedTransaction, StellarSDK.Networks.PUBLIC);
-                        _context5.next = 13;
+                        _context5.prev = 11;
+                        _context5.next = 14;
                         return server.submitTransaction(transactionToSubmit);
 
-                      case 13:
-                        response = _context5.sent;
-
                       case 14:
+                        response = _context5.sent;
+                        console.log(response);
+                        _context5.next = 21;
+                        break;
+
+                      case 18:
+                        _context5.prev = 18;
+                        _context5.t0 = _context5["catch"](11);
+                        console.error(_context5.t0);
+
+                      case 21:
                       case "end":
                         return _context5.stop();
                     }
                   }
-                }, _callee5);
+                }, _callee5, null, [[11, 18]]);
               }));
 
               return function (_x2) {
