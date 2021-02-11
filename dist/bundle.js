@@ -60032,7 +60032,7 @@ var _stellarSdk = require("stellar-sdk");
 
 var StellarSDK = require("stellar-sdk");
 
-var SERVER_URL = 'https://horizon.stellar.org';
+var SERVER_URL = 'https://horizon-test.stellar.org';
 var server = new StellarSDK.Server(SERVER_URL);
 var balances = document.getElementById('balances');
 var container = document.getElementById('container');
@@ -60172,25 +60172,34 @@ var connectServer = /*#__PURE__*/function () {
       while (1) {
         switch (_context4.prev = _context4.next) {
           case 0:
-            _context4.t0 = server;
+            _context4.t0 = console;
             _context4.next = 3;
             return retrievePublicKey();
 
           case 3:
             _context4.t1 = _context4.sent;
 
-            _context4.t0.loadAccount.call(_context4.t0, _context4.t1).then(function (account) {
+            _context4.t0.log.call(_context4.t0, _context4.t1);
+
+            _context4.t2 = server;
+            _context4.next = 8;
+            return retrievePublicKey();
+
+          case 8:
+            _context4.t3 = _context4.sent;
+
+            _context4.t2.loadAccount.call(_context4.t2, _context4.t3).then(function (account) {
+              // console.log(`account : ${account}`)
               account.balances.forEach(displayAsset);
               var balance = document.createElement('h3');
               balance.innerText = "Total Balance: ".concat(getBalance(account, 'XLM'), " XLM");
               container.appendChild(balance);
               spinner.classList.add('d-none');
               container.classList.remove('d-none');
-            })["catch"](function (err) {
-              console.log(err);
+            })["catch"](function (err) {// console.log(err);
             });
 
-          case 5:
+          case 10:
           case "end":
             return _context4.stop();
         }
@@ -60325,8 +60334,6 @@ var trustAsset = /*#__PURE__*/function () {
   return function trustAsset() {
     return _ref5.apply(this, arguments);
   };
-}();
-
-trustAsset();
+}(); // trustAsset()
 
 },{"@babel/runtime/helpers/asyncToGenerator":59,"@babel/runtime/helpers/interopRequireDefault":60,"@babel/runtime/regenerator":61,"@stellar/freighter-api":62,"babel-polyfill":63,"stellar-sdk":728}]},{},[781]);

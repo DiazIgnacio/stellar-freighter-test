@@ -7,7 +7,7 @@ import {
 import { Keypair } from 'stellar-sdk';
 
 const StellarSDK = require("stellar-sdk");
-const SERVER_URL = 'https://horizon.stellar.org'
+const SERVER_URL = 'https://horizon-test.stellar.org'
 const server = new StellarSDK.Server(SERVER_URL);
 const balances = document.getElementById('balances')
 const container = document.getElementById('container')
@@ -57,9 +57,11 @@ displayPublicKey()
 
 // Display the balance of the wallet (all assets)
 const connectServer = async () => {
+    console.log(await retrievePublicKey())
     server
         .loadAccount(await retrievePublicKey())
         .then((account) => {
+            // console.log(`account : ${account}`)
             account.balances.forEach(displayAsset);
             const balance = document.createElement('h3')
             balance.innerText = `Total Balance: ${getBalance(account, 'XLM')} XLM`
@@ -69,7 +71,7 @@ const connectServer = async () => {
 
         })
         .catch((err) => {
-            console.log(err);
+            // console.log(err);
         });
 }
 connectServer()
@@ -138,4 +140,4 @@ const trustAsset = async () => {
             }
         })
 }
-trustAsset()
+// trustAsset()
